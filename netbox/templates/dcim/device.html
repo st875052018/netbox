@@ -190,11 +190,11 @@
                         <th scope="row">{% trans "Primary IPv4" %}</th>
                         <td>
                           {% if object.primary_ip4 %}
-                            <a href="{{ object.primary_ip4.get_absolute_url }}" id="primary_ip4">{{ object.primary_ip4.address.ip }}</a>
+                            <a href="{{ object.primary_ip4.get_absolute_url }}" id="primary_ip4">{{ object.primary_ip4.ip_only }}</a>
                             {% if object.primary_ip4.nat_inside %}
-                              ({% trans "NAT for" %} <a href="{{ object.primary_ip4.nat_inside.get_absolute_url }}">{{ object.primary_ip4.nat_inside.address.ip }}</a>)
+                              ({% trans "NAT for" %} <a href="{{ object.primary_ip4.nat_inside.get_absolute_url }}">{{ object.primary_ip4.nat_inside.ip_only }}</a>)
                             {% elif object.primary_ip4.nat_outside.exists %}
-                              ({% trans "NAT" %}: {% for nat in object.primary_ip4.nat_outside.all %}<a href="{{ nat.get_absolute_url }}">{{ nat.address.ip }}</a>{% if not forloop.last %}, {% endif %}{% endfor %})
+                              ({% trans "NAT" %}: {% for nat in object.primary_ip4.nat_outside.all %}<a href="{{ nat.get_absolute_url }}">{{ nat.ip_only }}</a>{% if not forloop.last %}, {% endif %}{% endfor %})
                             {% endif %}
                             {% copy_content "primary_ip4" %}
                           {% else %}

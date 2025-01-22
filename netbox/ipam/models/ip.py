@@ -947,6 +947,12 @@ class IPAddress(ContactsMixin, PrimaryModel):
                 return True
         return False
 
+    @property
+    def ip_only(self):
+        # if getattr(settings.CONFIG, 'DISPLAY_IP_WITHOUT_MASK', False):
+        return str(self.address.ip)
+        # return str(self.address)
+
     def _set_mask_length(self, value):
         """
         Expose the IPNetwork object's prefixlen attribute on the parent model so that it can be manipulated directly,

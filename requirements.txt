@@ -1,3 +1,4 @@
+setuptools
 Django==5.1.5
 django-cors-headers==4.6.0
 django-debug-toolbar==5.0.1

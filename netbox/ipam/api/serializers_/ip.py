@@ -171,15 +171,16 @@ class IPAddressSerializer(NetBoxModelSerializer):
     assigned_object = serializers.SerializerMethodField(read_only=True)
     nat_inside = NestedIPAddressSerializer(required=False, allow_null=True)
     nat_outside = NestedIPAddressSerializer(many=True, read_only=True)
+    ip_only = serializers.SerializerMethodField()
 
     class Meta:
         model = IPAddress
         fields = [
-            'id', 'url', 'display_url', 'display', 'family', 'address', 'vrf', 'tenant', 'status', 'role',
+            'id', 'url', 'display_url', 'display', 'family', 'ip_only', 'address', 'vrf', 'tenant', 'status', 'role',
             'assigned_object_type', 'assigned_object_id', 'assigned_object', 'nat_inside', 'nat_outside',
             'dns_name', 'description', 'comments', 'tags', 'custom_fields', 'created', 'last_updated',
         ]
-        brief_fields = ('id', 'url', 'display', 'family', 'address', 'description')
+        brief_fields = ('id', 'url', 'display', 'family', 'ip_only', 'address', 'description')
 
     @extend_schema_field(serializers.JSONField(allow_null=True))
     def get_assigned_object(self, obj):
@@ -188,6 +189,9 @@ class IPAddressSerializer(NetBoxModelSerializer):
         serializer = get_serializer_for_model(obj.assigned_object)
         context = {'request': self.context['request']}
         return serializer(obj.assigned_object, nested=True, context=context).data
+
+    def get_ip_only(self, obj):
+        return obj.ip_only
 
 
 class AvailableIPSerializer(serializers.Serializer):

@@ -304,7 +304,9 @@ class IPRangeTable(TenancyColumnsMixin, NetBoxTable):
 
 class IPAddressTable(TenancyColumnsMixin, NetBoxTable):
     address = tables.TemplateColumn(
-        template_code=IPADDRESS_LINK,
+        template_code="""
+        <a href="{% url 'ipam:ipaddress' pk=record.pk %}">{{ record.ip_only }}</a>
+        """,
         verbose_name=_('IP Address')
     )
     vrf = tables.TemplateColumn(
